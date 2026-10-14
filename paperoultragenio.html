@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore Tesserini e Biglietti - IE11</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border: 1px solid #ced4da;
+        }
+        h1 {
+            color: #0078d4;
+            border-bottom: 2px solid #0078d4;
+            padding-bottom: 8px;
+            margin-top: 0;
+            font-size: 22px;
+        }
+        .campo {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 95%;
+            padding: 8px;
+            border: 1px solid #a6a6a6;
+            font-size: 14px;
+        }
+        button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+        /* Layout del Biglietto da Visita / Tesserino */
+        .anteprima-box {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px dashed #0078d4;
+        }
+        .biglietto {
+            width: 350px;
+            height: 200px;
+            background-color: #ffffff;
+            border: 2px solid #333333;
+            margin: 0 auto;
+            padding: 15px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .badge-header {
+            background-color: #0078d4;
+            color: white;
+            padding: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .badge-nome {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 5px;
+        }
+        .badge-ruolo {
+            font-size: 14px;
+            color: #555555;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .badge-contatto {
+            font-size: 12px;
+            color: #333333;
+            border-top: 1px solid #ccc;
+            padding-top: 5px;
+        }
+        /* Nasconde i controlli durante la stampa */
+        @media print {
+            .no-print {
+                display: none;
+            }
+            .anteprima-box {
+                border: none;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                background-color: #ffffff;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="no-print">
+        <h1>🪪 Generatore di Tesserini e Biglietti da Visita</h1>
+        <p>Compila i campi sottostanti per creare il tuo tesserino personalizzato pronto da stampare o salvare in PDF.</p>
+        
+        <div class="campo">
+            <label>Nome e Cognome:</label>
+            <input type="text" id="inputNome" value="Mario Rossi">
+        </div>
+        
+        <div class="campo">
+            <label>Qualifica / Ruolo Professionale:</label>
+            <input type="text" id="inputRuolo" value="Tecnico Specializzato IT">
+        </div>
+        
+        <div class="campo">
+            <label>Telefono / Contatto:</label>
+            <input type="text" id="inputContatto" value="Tel. +39 0123 456789">
+        </div>
+
+        <div style="margin-top: 15px;">
+            <button id="btnAggiorna">Aggiorna Tesserino</button>
+            <button id="btnStampa" style="background-color: #107c41;">🖨️ Stampa Tesserino</button>
+        </div>
+    </div>
+
+    <!-- AREA ANTEPRIMA TESSERINO -->
+    <div class="anteprima-box">
+        <div class="biglietto">
+            <div class="badge-header">PASS DI ACCESSO LOCALE</div>
+            <div class="badge-nome" id="badgeNome">Mario Rossi</div>
+            <div class="badge-ruolo" id="badgeRuolo">Tecnico Specializzato IT</div>
+            <div class="badge-contatto" id="badgeContatto">Tel. +39 0123 456789</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Riferimenti agli elementi del DOM (Sintassi ES5 ultra-compatibile)
+    var inputNome = document.getElementById("inputNome");
+    var inputRuolo = document.getElementById("inputRuolo");
+    var inputContatto = document.getElementById("inputContatto");
+
+    var badgeNome = document.getElementById("badgeNome");
+    var badgeRuolo = document.getElementById("badgeRuolo");
+    var badgeContatto = document.getElementById("badgeContatto");
+
+    // Funzione base per trasferire i testi nei div del tesserino
+    function aggiornaDatiTesserino() {
+        badgeNome.innerHTML = inputNome.value;
+        badgeRuolo.innerHTML = inputRuolo.value;
+        badgeContatto.innerHTML = inputContatto.value;
+    }
+
+    // Bottone Aggiorna
+    document.getElementById("btnAggiorna").addEventListener("click", function() {
+        aggiornaDatiTesserino();
+    });
+
+    // Bottone Stampa (Sfrutta il comando nativo del browser che apre la stampa di Windows 7)
+    document.getElementById("btnStampa").addEventListener("click", function() {
+        aggiornaDatiTesserino();
+        window.print();
+    });
+</script>
+
+</body>
+</html>
